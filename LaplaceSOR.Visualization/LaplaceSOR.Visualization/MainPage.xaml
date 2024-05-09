@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LaplaceSOR.Visualization.MainPage"
+             xmlns:viewmodel="clr-namespace:LaplaceSOR.Visualization.ViewModel"
+             x:DataType="viewmodel:MainViewModel">
+
+
+    <Grid Padding="20"
+          ColumnDefinitions="*, 150, *"
+          RowDefinitions="*, 70, *"
+          RowSpacing="10"
+          ColumnSpacing="10">
+
+        <Grid.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="SlateGrey"
+                              Offset="0.1"/>
+                <GradientStop Color="DimGray"
+                              Offset="1.0"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+        
+        <Button Text="Start"
+                TextColor="Black"
+                BackgroundColor ="DimGray"
+                FontSize="30"
+                FontFamily="Onest"
+                FontAttributes="Bold"
+                Command="{Binding TransitionCommand}"
+                Grid.Row="1"
+                Grid.Column ="1"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="Gold"
+                                  Offset="0.1" />
+                    <GradientStop Color="LawnGreen"
+                                  Offset="1.0"/>
+                </LinearGradientBrush>
+            </Button.Background>
+            
+            <Button.Shadow>
+                <Shadow Radius="1"
+                        Brush="DarkGoldenrod"
+                        Offset="0,5">
+
+                </Shadow>
+            </Button.Shadow>
+            
+        </Button>
+
+    </Grid>
+
+</ContentPage>

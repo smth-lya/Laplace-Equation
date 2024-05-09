@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaplaceSOR.Contracts", "LaplaceSOR.Contracts\LaplaceSOR.Contracts.csproj", "{FA0E5594-218F-4CCC-848C-2BEC2198F7FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA0E5594-218F-4CCC-848C-2BEC2198F7FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA0E5594-218F-4CCC-848C-2BEC2198F7FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA0E5594-218F-4CCC-848C-2BEC2198F7FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA0E5594-218F-4CCC-848C-2BEC2198F7FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10DC3472-2AB3-4A05-BE18-E0D9362B0889}
+	EndGlobalSection
+EndGlobal

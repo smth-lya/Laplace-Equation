@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             xmlns:viewmodel="clr-namespace:LaplaceSOR.Visualization.ViewModel"
+             x:Class="LaplaceSOR.Visualization.Pages.LaplaceGridPage"
+             x:DataType="viewmodel:LaplaceGridViewModel"
+             Title="LaplaceGridPage">
+
+
+    <ContentPage.Background>
+
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="DarkBlue"
+                          Offset="-1.0" />
+            <GradientStop Color="Black"
+                          Offset="1.0" />
+        </LinearGradientBrush>
+
+    </ContentPage.Background>
+    
+    <Grid>
+
+        <Label Text="Laplace’s PDE simulation"
+               TextColor="White"
+               FontSize="40"
+               Margin="10"
+               FontFamily="Onest"
+               FontAttributes="Bold"
+               WidthRequest="500"
+               HeightRequest="55"
+               VerticalOptions="Start"
+               HorizontalTextAlignment="Center">
+            
+
+        
+        </Label>
+
+        <VerticalStackLayout WidthRequest="100"
+                             HorizontalOptions="Start"
+                             Spacing="10">
+            <Label x:Name="MousePosText"
+                   BackgroundColor="Green">
+                
+            </Label>
+
+            <Label x:Name="MouseNormalizedPosText"
+                   BackgroundColor="Green">
+
+            </Label>
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="CenterAndExpand"
+                               Spacing="20">
+                        
+            <Frame WidthRequest="40"
+                   HeightRequest="600"
+                   CornerRadius="0"
+                   BorderColor="Black">
+                <Frame.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="Red"
+                                      Offset="0.0" />
+                        <GradientStop Color="Blue"
+                                      Offset="1.0" />
+                    </LinearGradientBrush>
+                </Frame.Background>
+            </Frame>
+
+            <skia:SKCanvasView x:Name="canvasView" 
+                               MaximumHeightRequest="580"
+                               MinimumHeightRequest="580"
+                               MaximumWidthRequest="580"
+                               MinimumWidthRequest="580"
+                               PaintSurface="OnCanvasViewPaintSurface" />
+
+        </HorizontalStackLayout>
+  
+        
+        <Frame WidthRequest="280" 
+               HeightRequest="710"
+               HorizontalOptions="EndAndExpand"
+               CornerRadius="0"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent">
+        
+            <VerticalStackLayout BackgroundColor="HotPink"
+                                 Spacing="10"
+                                 Padding="7">
+            
+                <VerticalStackLayout BackgroundColor="Pink"
+                                     Padding="7"
+                                     Spacing="10">
+
+                    <Label Text="PDE Solver"
+                           FontAttributes="Bold"
+                           FontFamily="Onest"                    
+                           FontSize="14">
+                        
+                    </Label>
+                    
+                    <HorizontalStackLayout Spacing="10">
+                    
+                        <Label Text="Solver:" 
+                               WidthRequest="70" 
+                               FontFamily="Onest"
+                               VerticalTextAlignment="Center"/>
+                    
+                        <Button x:Name="LoadAssembly"
+                                FontFamily="Onest"
+                                Text="Select File"
+                                BackgroundColor="Red" 
+                                WidthRequest="100"
+                                HeightRequest="30"
+                                MinimumHeightRequest="30"
+                                Pressed="OnButtonPressed"
+                                Released="OnButtonReleased"
+                                Clicked="OnFilePickerClicked"/>
+
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Timeslice: " WidthRequest="70" VerticalTextAlignment="Center" FontFamily="Onest"/>
+                        <Entry Placeholder="Enter value"
+                               Text="{Binding Timeslice}"
+                               FontFamily="Onest"
+                               WidthRequest="100" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+
+
+
+                        </Entry>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                    
+                        <Label Text="Epsilon:"
+                               WidthRequest="70" 
+                               FontFamily="Onest"
+                               VerticalTextAlignment="Center"/>
+                    
+                        <Entry Placeholder="" 
+                               Text="{Binding EpsilonInt}"
+                               FontFamily="Onest"
+                               WidthRequest="10" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+
+                        <Label Text="E"
+                               WidthRequest="10"
+                               FontFamily="Onest"
+                               VerticalTextAlignment="Center"/>
+
+                        <Entry Placeholder="" 
+                               Text="{Binding EpsilonE}"
+                               FontFamily="Onest"
+                               WidthRequest="20" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Omega:" WidthRequest="70" VerticalTextAlignment="Center" FontFamily="Onest"/>
+                        <Entry Placeholder="Enter value" 
+                               Text="{Binding Omega}"
+                               FontFamily="Onest"
+                               WidthRequest="100" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="MaxIter:" WidthRequest="70" VerticalTextAlignment="Center" FontFamily="Onest"/>
+                        <Entry Placeholder="Enter value" 
+                               Text="{Binding MaxIter}"
+                               FontFamily="Onest"
+                               WidthRequest="100" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"                               
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="20">
+                 
+                        <Button x:Name="StartButton" 
+                                Text="Start" 
+                                TextColor="Black"
+                                BackgroundColor="White" 
+                                FontFamily="Onest"
+                                WidthRequest="210"
+                                HeightRequest="30"
+                                MinimumHeightRequest="30"
+                                Pressed="OnButtonPressed"
+                                Released="OnButtonReleased"
+                                Command="{Binding StartCommand}"/>
+                    
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout BackgroundColor="Pink"
+                                     Padding="7"
+                                     Spacing="10">
+                    
+                    <Label Text="Area"
+                           FontFamily="Onest"
+                           FontAttributes="Bold"
+                           FontSize="14">
+                    </Label>
+
+                    <HorizontalStackLayout Spacing="10">
+
+                        <Label Text="Size: "
+                               WidthRequest="70" 
+                               FontFamily="Onest"
+                               VerticalTextAlignment="Center"/>
+
+                        <Entry Placeholder="" 
+                               Text="{Binding SizeY}"
+                               FontFamily="Onest"
+                               WidthRequest="10" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+
+                        <Label Text="X"
+                               WidthRequest="10"
+                               FontFamily="Onest"
+                               VerticalTextAlignment="Center"/>
+
+                        <Entry Placeholder="" 
+                               Text="{Binding SizeX}"
+                               FontFamily="Onest"
+                               WidthRequest="20" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+
+                    </HorizontalStackLayout>
+
+
+                    <HorizontalStackLayout Spacing="20" Margin="0">
+
+                        <Button x:Name="ZeroButton"
+                                Text="Zero"  
+                                TextColor="Black"
+                                BackgroundColor="White"
+                                FontFamily="Onest"
+                                WidthRequest="90"
+                                HeightRequest="30"
+                                MinimumHeightRequest="30"
+                                Pressed="OnButtonPressed"
+                                Released="OnButtonReleased"
+                                Command="{Binding ZeroCommand}"/>
+
+                        <Button x:Name="ResetButton" 
+                                Text="Reset" 
+                                TextColor="Black" 
+                                BackgroundColor="White"
+                                WidthRequest="90"
+                                HeightRequest="30"
+                                FontFamily="Onest"
+                                MinimumHeightRequest="30"
+                                Pressed="OnButtonPressed"
+                                Released="OnButtonReleased"
+                                Command="{Binding ResetCommand}"
+                                Clicked="OnResetButtonClicked"/>
+                    
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10" Margin="0,5,20,5">
+                        <Label Text="NColors:" WidthRequest="70" VerticalTextAlignment="Center" FontFamily="Onest"/>
+                        <Entry Placeholder="Enter value" 
+                               Text="{Binding NColors}"
+                               FontFamily="Onest"
+                               WidthRequest="100" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+                    </HorizontalStackLayout>
+                
+                </VerticalStackLayout>
+
+                <VerticalStackLayout BackgroundColor="Pink"
+                                     Padding="7" 
+                                     Spacing="10">
+
+                    <Label Text="Draw"
+                           FontFamily="Onest"
+                           FontAttributes="Bold"
+                           FontSize="14">
+                    </Label>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Shape: " WidthRequest="70" VerticalTextAlignment="Center" FontFamily="Onest"/>
+                        <Picker x:Name="ShapePicker" 
+                                ItemsSource="{Binding Shapes}"
+                                SelectedItem="{Binding ShapeType}"
+                                WidthRequest="100"
+                                HeightRequest="30"
+                                FontFamily="Onest"
+                                MinimumHeightRequest="30"
+                                BackgroundColor="LightPink">
+
+                            <!--<Picker.Items>
+                                <x:String>Point</x:String>
+                                <x:String>Circle</x:String>
+                            </Picker.Items>-->
+                        </Picker>
+                    </HorizontalStackLayout>
+        
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Brush: " WidthRequest="70" VerticalTextAlignment="Center" FontFamily="Onest"/>
+                        <Picker x:Name="TypePicker"
+                                SelectedIndex="1"
+                                ItemsSource="{Binding CellTypes}"
+                                SelectedItem="{Binding CellType}"
+                                WidthRequest="100"
+                                HeightRequest="30"
+                                FontFamily="Onest"
+                                MinimumHeightRequest="30"
+                                BackgroundColor="LightPink">
+
+                            <!--<Picker.Items>
+                                <x:String>Float</x:String>
+                                <x:String>Fixed</x:String>
+                            </Picker.Items>-->
+                            
+                        </Picker>
+
+                    </HorizontalStackLayout>
+
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Value:" WidthRequest="70" VerticalTextAlignment="Center" FontFamily="Onest"/>
+                        <Entry Placeholder="Enter value" 
+                               Text="{Binding DrawingValue}"
+                               FontFamily="Onest"
+                               WidthRequest="100" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Size:" WidthRequest="70" VerticalTextAlignment="Center" FontFamily="Onest"/>
+                        <Entry Placeholder="Enter value" 
+                               Text="{Binding BrushSize}"
+                               FontFamily="Onest"
+                               WidthRequest="100" 
+                               HeightRequest="30"
+                               MinimumHeightRequest="30"
+                               ClearButtonVisibility="WhileEditing"
+                               BackgroundColor="White" 
+                               PlaceholderColor="DimGray">
+                        </Entry>
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+
+</ContentPage>
