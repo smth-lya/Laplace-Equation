@@ -10,7 +10,7 @@ namespace LaplaceSOR.Visualization
             BindingContext = vm; 
         }
 
-        private async void OnButtonPressed(object? sender, EventArgs e)
+        private static async void OnButtonPressed(object? sender, EventArgs e)
         {
             var button = sender as Button;
 

@@ -7,17 +7,12 @@ using System.Reflection;
 
 namespace LaplaceSOR.Visualization.Pages;
 
-public interface ICell
-{
-    CellType Type { get; set; }
-    int Value { get; set; }
-}
 public enum CellType
 {
     Float,
     Fixed
 }
-public class Cell : ICell
+public struct Cell
 {
     public CellType Type { get; set; }
     public int Value { get; set; }
@@ -32,7 +27,7 @@ public class Cell : ICell
 public partial class LaplaceGridPage : ContentPage
 {
     private ILaplaceEquationSolver? _solver;
-    private double[,] _grid;
+    private Cell[,] _grid;
 
     private LaplaceGridViewModel _vm;
 
@@ -49,7 +44,7 @@ public partial class LaplaceGridPage : ContentPage
 
         InitializeGrid();
 
-        _grid = new double[_vm.SizeY, _vm.SizeX];
+        _grid = new Cell[_vm.SizeY, _vm.SizeX];
         _vm.BrushSize = _vm.SizeX / 4;
 
         canvasView.EnableTouchEvents = true;
@@ -72,15 +67,25 @@ public partial class LaplaceGridPage : ContentPage
                 return;
             }
 
-            _grid[Y, X] = _vm.CellType == CellType.Fixed ? 50 : 100;
+            _grid[Y, X].Value = _vm.DrawingValue;
+            _grid[Y, X].Type = _vm.CellType;
 
             canvasView.InvalidateSurface();
 
         }
         else if (e.MouseButton == SKMouseButton.Right)
         {
-
-            DrawCircle(_vm.BrushSize, _currentPoint);
+            switch (_vm.ShapeType)
+            {
+                case Shape.Point:
+                    DrawCircle(_vm.BrushSize, _currentPoint);
+                    break;
+                case Shape.Wonky:
+                    DrawCircle2(_vm.BrushSize, _currentPoint);
+                    break;
+                default:
+                    break;
+            }
             
             canvasView.InvalidateSurface();
 
@@ -101,17 +106,17 @@ public partial class LaplaceGridPage : ContentPage
         _vm.SizeX = width;
         _vm.SizeY = height;
         
-        _grid = new double[height, width];
+        _grid = new Cell[height, width];
         for (int x = 0; x < width; x++)
         {
-            _grid[0, x] = 100;
-            _grid[height - 1, x] = 100;
+            _grid[0, x].Value = 100;
+            _grid[height - 1, x].Value = 100;
         }
 
         for (int y = 0; y < height; y++)
         {
-            _grid[y, 0] = 100;
-            _grid[y, width - 1] = 100; 
+            _grid[y, 0].Value = 100;
+            _grid[y, width - 1].Value = 100; 
         }
     }
     private async void OnGridUpdated()
@@ -127,7 +132,7 @@ public partial class LaplaceGridPage : ContentPage
         SKSurface surface = e.Surface;
         SKCanvas canvas = surface.Canvas;
 
-        canvas.Clear(SKColors.White);
+       // canvas.Clear(SKColors.White);
 
         DrawLaplaceSolution(canvas);
         DrawGrid(canvas);
@@ -159,11 +164,12 @@ public partial class LaplaceGridPage : ContentPage
 
                 float sum = X * X + Y * Y;
 
-                var color = sum < radius / (height + width) ? 100 : 0;
+                var color = sum < radius / (height + width) ? _vm.DrawingValue : 0;
 
                 if (color != 0)
                 {
-                    _grid[y, x] = color;
+                    _grid[y, x].Value = color;
+                    _grid[y, x].Type = _vm.CellType;
                 }
             }
             
@@ -193,7 +199,7 @@ public partial class LaplaceGridPage : ContentPage
 
                 if (sum <= squaredRadius)
                 {
-                    _grid[y, x] = 100;
+                    _grid[y, x].Value = _vm.DrawingValue;
                 }
             }
 
@@ -241,18 +247,15 @@ public partial class LaplaceGridPage : ContentPage
         {
             for (int x = 0; x < width; x++)
             {
-                SKColor color = ValueToColor(grid[y, x]);
+                SKColor color = ValueToColor(grid[y, x].Value);
 
                 SKRect rect = SKRect.Create(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-                using (SKPaint paint = new SKPaint { Color = _vm.CellType == CellType.Fixed ? SKColors.White : color, StrokeWidth = 6, Style = SKPaintStyle.Stroke })
-                {
-                    canvas.DrawRect(rect, paint);
-                }
 
-                using (SKPaint paint = new SKPaint { Color = color, Style = SKPaintStyle.Fill })
+                using (SKPaint paint = new SKPaint { Color = color })
                 {
                     canvas.DrawRect(rect, paint);
                 }
+            
             }
         }
     }
@@ -267,7 +270,7 @@ public partial class LaplaceGridPage : ContentPage
 
     private SKColor ValueToColor(double value)
     {
-        double ratio = value / 100;
+        double ratio = value / _vm.NColors;
 
         return new SKColor((byte)(ratio * 255), 0, (byte)((1 - ratio) * 255));
     }
@@ -292,7 +295,7 @@ public partial class LaplaceGridPage : ContentPage
         if (_solver != null)
         {
             //_solver.GridUpdated += OnGridUpdated;
-            _solver.SetGrid(_grid, 4);
+            //_solver.SetGrid(_grid, 4);
             StartButton.Opacity = 1;
             //OnGridUpdated();
             StartButton.BackgroundColor = Colors.YellowGreen;
@@ -389,7 +392,7 @@ public partial class LaplaceGridPage : ContentPage
 
     private void OnResetButtonClicked(object sender, EventArgs e)
     {
-        _grid = new double[_vm.SizeY, _vm.SizeX];
+        _grid = new Cell[_vm.SizeY, _vm.SizeX];
         canvasView.InvalidateSurface();
     }
 }

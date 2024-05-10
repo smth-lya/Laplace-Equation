@@ -83,8 +83,7 @@
                CornerRadius="0"
                BorderColor="Transparent"
                BackgroundColor="Transparent">
-        
-            <VerticalStackLayout BackgroundColor="HotPink"
+            <ScrollView>            <VerticalStackLayout BackgroundColor="HotPink"
                                  Spacing="10"
                                  Padding="7">
             
@@ -389,6 +388,8 @@
                 </VerticalStackLayout>
 
             </VerticalStackLayout>
+            </ScrollView>
+
         </Frame>
     </Grid>
 
