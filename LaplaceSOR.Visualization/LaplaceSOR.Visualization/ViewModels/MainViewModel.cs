@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LaplaceSOR.Visualization.Pages;
 
-namespace LaplaceSOR.Visualization.ViewModel
+namespace LaplaceSOR.Visualization.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {

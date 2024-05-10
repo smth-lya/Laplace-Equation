@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaplaceSOR.Visualization", "LaplaceSOR.Visualization\LaplaceSOR.Visualization.csproj", "{0B874344-2581-4295-936A-AC9AC314B738}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaplaceSOR.Visualization", "LaplaceSOR.Visualization\LaplaceSOR.Visualization.csproj", "{516D9D7D-18CA-4635-AA95-2C794F9053F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,17 +11,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0B874344-2581-4295-936A-AC9AC314B738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B874344-2581-4295-936A-AC9AC314B738}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B874344-2581-4295-936A-AC9AC314B738}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{0B874344-2581-4295-936A-AC9AC314B738}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B874344-2581-4295-936A-AC9AC314B738}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B874344-2581-4295-936A-AC9AC314B738}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{516D9D7D-18CA-4635-AA95-2C794F9053F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516D9D7D-18CA-4635-AA95-2C794F9053F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516D9D7D-18CA-4635-AA95-2C794F9053F2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{516D9D7D-18CA-4635-AA95-2C794F9053F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516D9D7D-18CA-4635-AA95-2C794F9053F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516D9D7D-18CA-4635-AA95-2C794F9053F2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DF814456-880D-4B9E-90F7-7AFC9F8EC8AD}
+		SolutionGuid = {7490FA1E-6EF5-49D6-8893-B15AA9F920CD}
 	EndGlobalSection
 EndGlobal

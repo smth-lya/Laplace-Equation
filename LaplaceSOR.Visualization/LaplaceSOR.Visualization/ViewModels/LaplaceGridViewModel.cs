@@ -1,8 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LaplaceSOR.Visualization.Pages;
+using LaplaceSOR.Visualization.Models;
+using Microsoft.VisualBasic;
+using System.ComponentModel;
+using System.Windows.Input;
 
-namespace LaplaceSOR.Visualization.ViewModel
+namespace LaplaceSOR.Visualization.ViewModels
 {
     public partial class LaplaceGridViewModel : ObservableObject
     {
@@ -37,25 +40,51 @@ namespace LaplaceSOR.Visualization.ViewModel
         private float _brushSize;
 
         [ObservableProperty]
-        private CellType _cellType;
+        private CellType _cellType; 
 
         [ObservableProperty]
         private List<CellType> _cellTypes;
 
         [ObservableProperty]
-        private Shape _shapeType;
+        private ShapeType _shapeType;
 
         [ObservableProperty]
-        private List<Shape> _shapes;
+        private List<ShapeType> _shapes;
+        
+        public ICommand ToggleProportionsCommand => new Command(() =>
+        {
+            ProportionsLocked = !ProportionsLocked;
+        });
+        
+        [ObservableProperty]
+        private bool _proportionsLocked;
 
         public LaplaceGridViewModel()
         {
             _cellTypes = Enum.GetValues(typeof(CellType)).Cast<CellType>().ToList();
+            _shapes = Enum.GetValues(typeof(ShapeType)).Cast<ShapeType>().ToList();
 
-            _shapes = Enum.GetValues(typeof(Shape)).Cast<Shape>().ToList();   
-
-            
+            PropertyChanged += OnPropertyChanged;
         }
+
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SizeX) || e.PropertyName == nameof(SizeY))
+            {
+                if (ProportionsLocked)
+                {
+                    if (e.PropertyName == nameof(SizeX))
+                    {
+                        SizeY = SizeX;
+                    }
+                    else if (e.PropertyName == nameof(SizeY))
+                    {
+                        SizeX = SizeY;
+                    }
+                }
+            }
+        }
+
 
         [RelayCommand]
         private void Start()
@@ -72,7 +101,7 @@ namespace LaplaceSOR.Visualization.ViewModel
         [RelayCommand]
         private void Reset()
         {
-            
+
         }
 
         [RelayCommand]
@@ -86,8 +115,3 @@ namespace LaplaceSOR.Visualization.ViewModel
 }
 
 
-public enum Shape
-{
-    Point,
-    Wonky
-}

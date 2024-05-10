@@ -1,5 +1,5 @@
 ﻿using LaplaceSOR.Visualization.Pages;
-using LaplaceSOR.Visualization.ViewModel;
+using LaplaceSOR.Visualization.ViewModels;
 using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
@@ -21,7 +21,7 @@ namespace LaplaceSOR.Visualization
                 });
 
 #if DEBUG
-            builder.Logging.AddDebug();
+    		builder.Logging.AddDebug();
 #endif
 
             builder.Services.AddSingleton<MainPage>();
@@ -29,6 +29,7 @@ namespace LaplaceSOR.Visualization
 
             builder.Services.AddSingleton<LaplaceGridPage>();
             builder.Services.AddSingleton<LaplaceGridViewModel>();
+
 
             return builder.Build();
         }
