@@ -146,6 +146,7 @@ public class ShapeDrawer
                 var color = 1 / Math.Sqrt(sum) * radius;
 
                 if (color <= radius) continue;
+
                 _gridModel._grid[y, x].Value = color;
                 _gridModel._grid[y, x].Type = _viewModel.CellType;
             }

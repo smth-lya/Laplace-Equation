@@ -22,10 +22,7 @@ public partial class LaplaceGridPage : ContentPage
     public LaplaceGridPage(LaplaceGridViewModel vm)
 	{
 		InitializeComponent();
-
-        BindingContext = vm;
-        _viewModel = vm;
-
+        BindingContext = _viewModel = vm;
         SetBaseSettings();
         InitializeModels();
     }
@@ -34,7 +31,6 @@ public partial class LaplaceGridPage : ContentPage
     {
         _viewModel.EpsilonInt = 1;
         _viewModel.EpsilonE = -3;
-
         _viewModel.Timeslice = 100;
 
         _viewModel.Omega = 1.5;
@@ -48,7 +44,7 @@ public partial class LaplaceGridPage : ContentPage
         _viewModel.BrushSize = _viewModel.SizeX / 4;
     }
 
-    [MemberNotNull(nameof(_gridModel), nameof(_shapeDrawer), nameof(_solverLoader))]
+    [MemberNotNull(nameof(_gridModel), nameof(_shapeDrawer), nameof(_solverLoader), nameof(_source))]
     private void InitializeModels()
     {
         _source = new CancellationTokenSource();
@@ -62,6 +58,7 @@ public partial class LaplaceGridPage : ContentPage
         canvasView.EnableTouchEvents = true;
         canvasView.Touch += _shapeDrawer.TouchEventHandler;
     }
+
     private void DisableModels()
     {
         _source.Cancel();
@@ -103,20 +100,10 @@ public partial class LaplaceGridPage : ContentPage
 
     private void SwitchStateOfLoadButton(Button button, bool isLoaded)
     {
-        if (isLoaded)
-        {
-            button.Text = "Loaded";
-            button.TextColor = Colors.Black;
-            button.BackgroundColor = Colors.YellowGreen;
-        }
-        else
-        {
-            button.Text = "Select File";
-            button.TextColor = Colors.White;
-            button.BackgroundColor = Colors.Red;
-        }
+        button.Text = isLoaded ? "Loaded" : "Select File";
+        button.TextColor = isLoaded ? Colors.Black : Colors.White;
+        button.BackgroundColor = isLoaded ? Colors.YellowGreen : Colors.Red;
     }
-
     private async void OnStartSolving(object? sender, EventArgs e)
     {
         var button = sender as Button;
@@ -138,7 +125,12 @@ public partial class LaplaceGridPage : ContentPage
         button.BackgroundColor = Colors.Gray;
         button.Text = "Stop";
 
-        await Task.Run(() => _solver?.Solve(omega:_viewModel.Omega, eps:_viewModel.EpsilonInt * Math.Pow(10, _viewModel.EpsilonE), maxIterations: _viewModel.MaxIter, millisecondsTimeout: _viewModel.Timeslice, cancellationToken:_token));
+        await Task.Run(() => _solver?.Solve(
+               omega: _viewModel.Omega,
+               eps: _viewModel.EpsilonInt * Math.Pow(10, _viewModel.EpsilonE),
+               maxIterations: _viewModel.MaxIter,
+               millisecondsTimeout: _viewModel.Timeslice,
+               cancellationToken: _token));
 
         button.BackgroundColor = Colors.YellowGreen;
         button.Text = "Start";

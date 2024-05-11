@@ -85,34 +85,5 @@ namespace LaplaceSOR.Visualization.ViewModels
                 }
             }
         }
-
-
-        [RelayCommand]
-        private void Start()
-        {
-
-        }
-
-        [RelayCommand]
-        private void Zero()
-        {
-
-        }
-
-        [RelayCommand]
-        private void Reset()
-        {
-
-        }
-
-        [RelayCommand]
-        private void EmptyText(string s)
-        {
-
-        }
     }
-
-
 }
-
-

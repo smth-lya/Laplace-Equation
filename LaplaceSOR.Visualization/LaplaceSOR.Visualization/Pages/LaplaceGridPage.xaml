@@ -185,7 +185,6 @@
                                 MinimumHeightRequest="30"
                                 HorizontalOptions="Start"
                                 IsEnabled="False"
-                                Command="{Binding StartCommand}"
                                 Clicked="OnStartSolving">
 
                             <Button.Behaviors>
@@ -270,8 +269,7 @@
                                     FontFamily="Onest"
                                     WidthRequest="90"
                                     HeightRequest="30"
-                                    MinimumHeightRequest="30"
-                                    Command="{Binding ZeroCommand}">
+                                    MinimumHeightRequest="30">
                                 <Button.Behaviors>
                                     <behavior:ButtonBehavior/>
                                 </Button.Behaviors>
@@ -284,7 +282,6 @@
                                     WidthRequest="90"
                                     HeightRequest="30"
                                     MinimumHeightRequest="30"
-                                    Command="{Binding ResetCommand}"
                                     Clicked="OnReset">
                                 <Button.Behaviors>
                                     <behavior:ButtonBehavior/>

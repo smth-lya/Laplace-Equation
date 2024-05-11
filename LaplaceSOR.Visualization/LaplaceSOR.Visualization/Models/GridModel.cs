@@ -39,10 +39,8 @@ public class GridModel
         {
             return _grid[y, x].Value;
         }
-        else
-        {
-            return 0;
-        }
+        
+        return 0;
     }
     public void UpdateCell(int x, int y, double value, CellType type)
     {

@@ -70,9 +70,9 @@ public class SolverLoader
             return null;
         }
 
-        if (Activator.CreateInstance(type, true) is object solverInstance)
+        if (Activator.CreateInstance(type, true) is ILaplaceEquationSolver solverInstance)
         {
-            return (ILaplaceEquationSolver)solverInstance;
+            return solverInstance;
         }
         else
         {

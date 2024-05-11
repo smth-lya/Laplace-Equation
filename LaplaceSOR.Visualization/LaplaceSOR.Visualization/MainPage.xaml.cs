@@ -10,7 +10,5 @@ namespace LaplaceSOR.Visualization
 
             BindingContext = vm;
         }
-
-
     }
 }
