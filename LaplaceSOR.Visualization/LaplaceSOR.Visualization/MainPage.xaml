@@ -4,12 +4,13 @@
              xmlns:viewmodel="clr-namespace:LaplaceSOR.Visualization.ViewModels"
              xmlns:behavior="clr-namespace:LaplaceSOR.Visualization.Behaviors"
              x:Class="LaplaceSOR.Visualization.MainPage"
-             x:DataType="viewmodel:MainViewModel">
+             x:DataType="viewmodel:MainViewModel"
+             Title="It's not your home">
 
     <ContentPage.Background>
         <RadialGradientBrush>
-            <GradientStop Color="SlateGrey" Offset="0.1"/>
-            <GradientStop Color="DimGray" Offset="1.0"/>
+            <GradientStop Color="DarkBlue" Offset="0.1"/>
+            <GradientStop Color="Black" Offset="1.0"/>
         </RadialGradientBrush>
     </ContentPage.Background>
 

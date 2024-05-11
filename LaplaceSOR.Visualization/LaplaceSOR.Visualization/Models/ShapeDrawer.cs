@@ -1,4 +1,5 @@
-﻿using LaplaceSOR.Visualization.ViewModels;
+﻿using LaplaceSOR.Contracts;
+using LaplaceSOR.Visualization.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
@@ -9,12 +10,17 @@ public class ShapeDrawer
     private GridModel _gridModel;
     private LaplaceGridViewModel _viewModel;
 
+    private ILaplaceEquationSolver? _solver;
+
     private SKPoint _cellSize;
 
-    public ShapeDrawer(GridModel gridModel, LaplaceGridViewModel viewModel)
+
+    public ShapeDrawer(GridModel gridModel, LaplaceGridViewModel viewModel, ILaplaceEquationSolver? solver)
     {
         _gridModel = gridModel;
         _viewModel = viewModel;
+
+        _solver = solver;
     }
 
     public void OnCanvasViewPaintSurface(object? sender, SKPaintSurfaceEventArgs e)
@@ -22,8 +28,10 @@ public class ShapeDrawer
         SKSurface surface = e.Surface;
         SKCanvas canvas = surface.Canvas;
 
+        if (_solver != null)
+            _gridModel._grid = _solver.Grid;
+
         DrawGrid(canvas);
-        DrawLaplaceSolution(canvas);
     }
     public void TouchEventHandler(object? sender, SKTouchEventArgs e)
     {
@@ -81,11 +89,6 @@ public class ShapeDrawer
             }
         }
     }
-    private void DrawLaplaceSolution(SKCanvas canvas)
-    {
-
-    }
-
 
     private void DrawCircle(float diameter, SKPoint center)
     {
@@ -142,6 +145,7 @@ public class ShapeDrawer
 
                 var color = 1 / Math.Sqrt(sum) * radius;
 
+                if (color <= radius) continue;
                 _gridModel._grid[y, x].Value = color;
                 _gridModel._grid[y, x].Type = _viewModel.CellType;
             }

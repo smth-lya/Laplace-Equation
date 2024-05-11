@@ -56,7 +56,7 @@
                Margin="150,0, 15,0"
                BackgroundColor="White">
 
-            <Grid RowDefinitions=".55*, 0.34*, 0.33*"
+            <Grid RowDefinitions=".55*, 0.34*, 0.32*"
                   ColumnDefinitions="*"
                   RowSpacing="20">
 
@@ -83,7 +83,8 @@
                                     BackgroundColor="Red"         
                                     WidthRequest="100"
                                     HeightRequest="30"
-                                    MinimumHeightRequest="30">
+                                    MinimumHeightRequest="30"
+                                    Clicked="OnLoadSolverAssembly">
 
                                 <Button.Behaviors>
                                     <behavior:ButtonBehavior/>
@@ -174,7 +175,8 @@
 
                         </HorizontalStackLayout>
 
-                        <Button Text="Start"
+                        <Button x:Name="StartButton"
+                                Text="Start"
                                 TextColor="Black"
                                 BackgroundColor="YellowGreen"         
                                 FontFamily="Onest"
@@ -182,7 +184,9 @@
                                 HeightRequest="30"
                                 MinimumHeightRequest="30"
                                 HorizontalOptions="Start"
-                                Command="{Binding StartCommand}">
+                                IsEnabled="False"
+                                Command="{Binding StartCommand}"
+                                Clicked="OnStartSolving">
 
                             <Button.Behaviors>
                                 <behavior:ButtonBehavior/>

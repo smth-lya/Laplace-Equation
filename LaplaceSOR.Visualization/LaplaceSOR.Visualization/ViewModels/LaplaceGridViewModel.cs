@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LaplaceSOR.Contracts;
 using LaplaceSOR.Visualization.Models;
 using Microsoft.VisualBasic;
 using System.ComponentModel;
@@ -19,10 +20,10 @@ namespace LaplaceSOR.Visualization.ViewModels
         private int _epsilonE;
 
         [ObservableProperty]
-        private string? _omega;
+        private double _omega;
 
         [ObservableProperty]
-        private string? _maxIter;
+        private int _maxIter;
 
         [ObservableProperty]
         private int _sizeX;

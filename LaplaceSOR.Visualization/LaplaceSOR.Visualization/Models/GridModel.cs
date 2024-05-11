@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using LaplaceSOR.Contracts;
 
 namespace LaplaceSOR.Visualization.Models;
 
 public class GridModel
 {
-    public Cell[,] _grid;
+    public LaplaceCell[,] _grid;
 
     public int Width { get; private set; }
     public int Height { get; private set; }
@@ -21,13 +22,13 @@ public class GridModel
     [MemberNotNull(nameof(_grid))]
     private void InitializeGrid()
     {
-        _grid = new Cell[Height, Width];
+        _grid = new LaplaceCell[Height, Width];
 
         for (int y = 0; y < Height; y++)
         {
             for (int x = 0; x < Width; x++)
             {
-                _grid[y, x] = new Cell(CellType.Float, 0);
+                _grid[y, x] = new LaplaceCell(CellType.Float, 0);
             }
         }
     }
